@@ -124,13 +124,13 @@ This sample is configured to support debugging both JavaScript and C# files. New
 1. In the **launchSettings.json** file of the web project, make sure all instances of `launchBrowser` are set to `false`.
 1. In the **<projectName>.csproj.user** file of the add-in project, add the `<BlazorAppUrl>` and `<InspectUri>` elements as shown in the following example XML.
 
-**Note:** The port number in the following XML is 7215. You must change it to the port number specified in the **launchSettings.json** file for your web project.
+**Note:** The port number in the following XML is 7217. You must change it to the port number specified in the **launchSettings.json** file for your web project.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <BlazorAppUrl>https://localhost:7215/</BlazorAppUrl>
+    <BlazorAppUrl>https://localhost:7217/</BlazorAppUrl>
     <InspectUri>{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}</InspectUri>
   </PropertyGroup>
 </Project>

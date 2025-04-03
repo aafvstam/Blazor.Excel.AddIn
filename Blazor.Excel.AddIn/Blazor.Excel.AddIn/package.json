@@ -12,7 +12,7 @@
   "config": {
     "app_to_debug": "excel",
     "app_type_to_debug": "desktop",
-    "dev_server_port": 7215
+    "dev_server_port": 7217
   },
   "scripts": {
     "start-production": "office-addin-debugging start ..\\Blazor.Excel.AddIn\\Assets\\manifest.production.xml",
