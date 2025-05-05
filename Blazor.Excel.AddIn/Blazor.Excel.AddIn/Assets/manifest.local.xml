@@ -207,13 +207,13 @@
 								</Control>
 
 								<!-- Control. It can be of type "Button" or "Menu". -->
-								<Control xsi:type="Button" id="Contoso.Taskpane.CC.Button">
-									<Label resid="Contoso.Taskpane.CC.Label" />
+								<Control xsi:type="Button" id="Contoso.Taskpane.Bubble.Button">
+									<Label resid="Contoso.Taskpane.Bubble.Label" />
 									<Supertip>
 										<!-- ToolTip title. resid must point to a ShortString resource. -->
-										<Title resid="Contoso.Taskpane.CC.Label" />
+										<Title resid="Contoso.Taskpane.Bubble.Label" />
 										<!-- ToolTip description. resid must point to a LongString resource. -->
-										<Description resid="Contoso.Taskpane.CC.Tooltip" />
+										<Description resid="Contoso.Taskpane.Bubble.Tooltip" />
 									</Supertip>
 									<Icon>
 										<bt:Image size="16" resid="Contoso.tpicon_16x16" />
@@ -227,7 +227,7 @@
 										<!-- Taskpane prepared to be activated as AutoOpen Taskpane -->
 										<!-- See: Samples/office-add-in-commands/auto-open-task-pane -->
 										<!--<TaskpaneId>Office.AutoShowTaskpaneWithDocument</TaskpaneId>-->
-										<SourceLocation resid="Contoso.CC.Url" />
+										<SourceLocation resid="Contoso.Bubble.Url" />
 										<!--<TaskpaneId>SampleAddinTaskpaneId</TaskpaneId>-->
 										<!-- Provide a URL resource id for the location that will be displayed on the task pane. -->
 									</Action>
@@ -264,7 +264,47 @@
 
 									<!-- This is what happens when the command is triggered (E.g. click on the Ribbon). Supported actions are ExecuteFunction or ShowTaskpane. -->
 									<Action xsi:type="ExecuteFunction">
-										<FunctionName>insertTextInWord</FunctionName>
+										<FunctionName>highlightSelectionHome</FunctionName>
+									</Action>
+								</Control>
+
+								<Control xsi:type="Button" id="Contoso.FunctionButton1">
+									<Label resid="Contoso.FunctionButton1.Label" />
+									<Supertip>
+										<!-- ToolTip title. resid must point to a ShortString resource. -->
+										<Title resid="Contoso.FunctionButton1.Label" />
+										<!-- ToolTip description. resid must point to a LongString resource. -->
+										<Description resid="Contoso.FunctionButton1.Tooltip" />
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="Contoso.tpicon_16x16" />
+										<bt:Image size="32" resid="Contoso.tpicon_32x32" />
+										<bt:Image size="80" resid="Contoso.tpicon_80x80" />
+									</Icon>
+
+									<!-- This is what happens when the command is triggered (E.g. click on the Ribbon). Supported actions are ExecuteFunction or ShowTaskpane. -->
+									<Action xsi:type="ExecuteFunction">
+										<FunctionName>highlightSelectionCounter</FunctionName>
+									</Action>
+								</Control>
+
+								<Control xsi:type="Button" id="Contoso.FunctionButton2">
+									<Label resid="Contoso.FunctionButton2.Label" />
+									<Supertip>
+										<!-- ToolTip title. resid must point to a ShortString resource. -->
+										<Title resid="Contoso.FunctionButton2.Label" />
+										<!-- ToolTip description. resid must point to a LongString resource. -->
+										<Description resid="Contoso.FunctionButton2.Tooltip" />
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="Contoso.tpicon_16x16" />
+										<bt:Image size="32" resid="Contoso.tpicon_32x32" />
+										<bt:Image size="80" resid="Contoso.tpicon_80x80" />
+									</Icon>
+
+									<!-- This is what happens when the command is triggered (E.g. click on the Ribbon). Supported actions are ExecuteFunction or ShowTaskpane. -->
+									<Action xsi:type="ExecuteFunction">
+										<FunctionName>writeValue</FunctionName>
 									</Action>
 								</Control>
 
@@ -282,58 +322,6 @@
 									<bt:Image size="80" resid="Contoso.tpicon_80x80" />
 								</Icon>
 
-								<!--<Control xsi:type="Button" id="Contoso.FunctionButton1">
-									<Label resid="Contoso.FunctionButton1.Label" />
-									<Supertip>
-										-->
-								<!-- ToolTip title. resid must point to a ShortString resource. -->
-								<!--
-										<Title resid="Contoso.FunctionButton1.Label" />
-										-->
-								<!-- ToolTip description. resid must point to a LongString resource. -->
-								<!--
-										<Description resid="Contoso.FunctionButton1.Tooltip" />
-									</Supertip>
-									<Icon>
-										<bt:Image size="16" resid="Contoso.tpicon_16x16" />
-										<bt:Image size="32" resid="Contoso.tpicon_32x32" />
-										<bt:Image size="80" resid="Contoso.tpicon_80x80" />
-									</Icon>
-
-									-->
-								<!-- This is what happens when the command is triggered (E.g. click on the Ribbon). Supported actions are ExecuteFunction or ShowTaskpane. -->
-								<!--
-									<Action xsi:type="ExecuteFunction">
-										<FunctionName>highlightSelectionIndex</FunctionName>
-									</Action>
-								</Control>
-
-								<Control xsi:type="Button" id="Contoso.FunctionButton2">
-									<Label resid="Contoso.FunctionButton2.Label" />
-									<Supertip>
-										-->
-								<!-- ToolTip title. resid must point to a ShortString resource. -->
-								<!--
-										<Title resid="Contoso.FunctionButton2.Label" />
-										-->
-								<!-- ToolTip description. resid must point to a LongString resource. -->
-								<!--
-										<Description resid="Contoso.FunctionButton2.Tooltip" />
-									</Supertip>
-									<Icon>
-										<bt:Image size="16" resid="Contoso.tpicon_16x16" />
-										<bt:Image size="32" resid="Contoso.tpicon_32x32" />
-										<bt:Image size="80" resid="Contoso.tpicon_80x80" />
-									</Icon>
-
-									-->
-								<!-- This is what happens when the command is triggered (E.g. click on the Ribbon). Supported actions are ExecuteFunction or ShowTaskpane. -->
-								<!--
-									<Action xsi:type="ExecuteFunction">
-										<FunctionName>highlightSelectionBubble</FunctionName>
-									</Action>
-								</Control>
--->
 								<Control xsi:type="Button" id="Contoso.FunctionButton3">
 									<Label resid="Contoso.FunctionButton3.Label" />
 									<Supertip>
@@ -350,27 +338,7 @@
 
 									<!-- This is what happens when the command is triggered (E.g. click on the Ribbon). Supported actions are ExecuteFunction or ShowTaskpane. -->
 									<Action xsi:type="ExecuteFunction">
-										<FunctionName>callBlazorOnCounter</FunctionName>
-									</Action>
-								</Control>
-
-								<Control xsi:type="Button" id="Contoso.FunctionButton4">
-									<Label resid="Contoso.FunctionButton4.Label" />
-									<Supertip>
-										<!-- ToolTip title. resid must point to a ShortString resource. -->
-										<Title resid="Contoso.FunctionButton4.Label" />
-										<!-- ToolTip description. resid must point to a LongString resource. -->
-										<Description resid="Contoso.FunctionButton4.Tooltip" />
-									</Supertip>
-									<Icon>
-										<bt:Image size="16" resid="Contoso.tpicon_16x16" />
-										<bt:Image size="32" resid="Contoso.tpicon_32x32" />
-										<bt:Image size="80" resid="Contoso.tpicon_80x80" />
-									</Icon>
-
-									<!-- This is what happens when the command is triggered (E.g. click on the Ribbon). Supported actions are ExecuteFunction or ShowTaskpane. -->
-									<Action xsi:type="ExecuteFunction">
-										<FunctionName>callBlazorOnHome</FunctionName>
+										<FunctionName>createBubbles</FunctionName>
 									</Action>
 								</Control>
 							</Group>
@@ -396,7 +364,7 @@
 				<bt:Url id="Contoso.Weather.Url" DefaultValue="https://localhost:7217/weather" />
 				<bt:Url id="Contoso.Counter.Url" DefaultValue="https://localhost:7217/counter" />
 				<bt:Url id="Contoso.Theme.Url" DefaultValue="https://localhost:7217/theme" />
-                <bt:Url id="Contoso.CC.Url" DefaultValue="https://localhost:7217/contentcontrols" />
+                <bt:Url id="Contoso.Bubble.Url" DefaultValue="https://localhost:7217/bubblechart" />
 
 				<bt:Url id="Contoso.GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
 			</bt:Urls>
@@ -415,13 +383,13 @@
 				<bt:String id="Contoso.Taskpane.Weather.Label" DefaultValue="Weather" />
 				<bt:String id="Contoso.Taskpane.Counter.Label" DefaultValue="Counter" />
 				<bt:String id="Contoso.Taskpane.Theme.Label" DefaultValue="Theme" />
-                <bt:String id="Contoso.Taskpane.CC.Label" DefaultValue="Content Controls" />
+                <bt:String id="Contoso.Taskpane.Bubble.Label" DefaultValue="Bubbles" />
 
-				<bt:String id="Contoso.FunctionButton0.Label" DefaultValue="Insert Text" />
-				<bt:String id="Contoso.FunctionButton1.Label" DefaultValue="To Do" />
-				<bt:String id="Contoso.FunctionButton2.Label" DefaultValue="To Do" />
-				<bt:String id="Contoso.FunctionButton3.Label" DefaultValue="Insert Name from Counter" />
-				<bt:String id="Contoso.FunctionButton4.Label" DefaultValue="Insert Name from Home" />
+				<bt:String id="Contoso.FunctionButton0.Label" DefaultValue="Insert Name from Home" />
+				<bt:String id="Contoso.FunctionButton1.Label" DefaultValue="Insert Name from Counter" />
+				<bt:String id="Contoso.FunctionButton2.Label" DefaultValue="Write JS" />
+				<bt:String id="Contoso.FunctionButton3.Label" DefaultValue="Bubbles" />
+				<bt:String id="Contoso.FunctionButton4.Label" DefaultValue="..." />
 			</bt:ShortStrings>
 
 			<!-- LongStrings max characters==250. -->
@@ -430,12 +398,12 @@
 				<bt:String id="Contoso.Taskpane.Weather.Tooltip" DefaultValue="Click to Show Weather Taskpane" />
 				<bt:String id="Contoso.Taskpane.Counter.Tooltip" DefaultValue="Click to Show Counter Taskpane" />
 				<bt:String id="Contoso.Taskpane.Theme.Tooltip" DefaultValue="Click to Show Theme Taskpane" />
-                <bt:String id="Contoso.Taskpane.CC.Tooltip" DefaultValue="Click to Show Content Controls Taskpane" />
+                <bt:String id="Contoso.Taskpane.Bubble.Tooltip" DefaultValue="Click to Show Bubble Chart Taskpane" />
 
-				<bt:String id="Contoso.FunctionButton0.Tooltip" DefaultValue="Click to insert text in slide" />
-				<bt:String id="Contoso.FunctionButton1.Tooltip" DefaultValue="Click to do something" />
-				<bt:String id="Contoso.FunctionButton3.Tooltip" DefaultValue="Click to do something" />
-				<bt:String id="Contoso.FunctionButton2.Tooltip" DefaultValue="Click to insert name from Counter" />
+				<bt:String id="Contoso.FunctionButton0.Tooltip" DefaultValue="Click to insert text from Home Page" />
+				<bt:String id="Contoso.FunctionButton1.Tooltip" DefaultValue="Click to insert text from Counter Page" />
+				<bt:String id="Contoso.FunctionButton3.Tooltip" DefaultValue="Click to insert text from commands.js" />
+				<bt:String id="Contoso.FunctionButton2.Tooltip" DefaultValue="Click to Run CreateBubbles from BubbleChart Page" />
 				<bt:String id="Contoso.FunctionButton4.Tooltip" DefaultValue="Click to insert name from Home" />
 
 				<bt:String id="Contoso.GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the Sample Add-in tab and click the 'Show Taskpane' button to get started." />

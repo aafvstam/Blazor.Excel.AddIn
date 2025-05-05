@@ -1,6 +1,5 @@
-﻿﻿@* Copyright (c) Maarten van Stam. All rights reserved. Licensed under the MIT License. *@
-@page "/"
-@page "/home"
+﻿@* Copyright (c) Maarten van Stam. All rights reserved. Licensed under the MIT License. *@
+@page "/bubblechart"
 @rendermode InteractiveWebAssembly
 
 <PageTitle>Home</PageTitle>
@@ -12,10 +11,10 @@
         <FluentStack Orientation=Orientation.Horizontal
                      HorizontalAlignment="HorizontalAlignment.Center"
                      VerticalAlignment="VerticalAlignment.Center">
-            <FluentEmoji Value="@(new Emojis.TravelPlaces.Color.Default.Rocket())" />
-            <FluentLabel Typo="Typography.H1">Hello!</FluentLabel>
+            <FluentEmoji Value="@(new Emojis.Activities.Color.Default.Balloon())" />
+            <FluentLabel Typo="Typography.H1">Bubbles!</FluentLabel>
         </FluentStack>
-        <FluentLabel>Welcome to your new Excel Add-in.</FluentLabel>
+        <FluentLabel>This sample shows how to create a bubble chart, with each chart series (or bubble) representing a single table row.</FluentLabel>
 
         @if (!hostInformation.IsInitialized)
         {
@@ -25,11 +24,14 @@
         }
         else
         {
-            <FluentLabel Typo="Typography.Body" Alignment="HorizontalAlignment.Center">
-                Set cell A1 to the value of 'Hello world!!!' using JavaScript interop between Blazor and the Office JavaScript API.
+            <FluentLabel Typo="Typography.H3" Alignment="HorizontalAlignment.Center">
+                Set up                
             </FluentLabel>
-            <FluentButton OnClick="HelloButton" Appearance="Appearance.Accent">Say Hello World in Excel!</FluentButton>
+            <FluentButton OnClick="CreateTable" Appearance="Appearance.Accent">Create table</FluentButton>
+            <FluentLabel Typo="Typography.H3" Alignment="HorizontalAlignment.Center">
+                Try it out
+            </FluentLabel>
+            <FluentButton OnClick="CreateBubbleChart" Appearance="Appearance.Accent">Create a bubble chart</FluentButton>
         }
-
     </FluentStack>
 </LoadingProgress>

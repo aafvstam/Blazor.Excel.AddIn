@@ -12,7 +12,7 @@ namespace Blazor.Excel.AddIn.Client.Pages;
 
 public partial class Weather : ComponentBase
 {
-    private HostInformation hostInformation = new HostInformation();
+    private HostInformation hostInformation = new();
 
     [Inject, AllowNull]
     private IJSRuntime JSRuntime { get; set; }
@@ -68,11 +68,19 @@ public partial class Weather : ComponentBase
 
         var startDate = DateOnly.FromDateTime(DateTime.Now);
         var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        forecasts = [.. Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = startDate.AddDays(index),
             TemperatureC = Random.Shared.Next(-20, 55),
             Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
+        })];
+    }
+
+    private async Task CopyButton()
+    {
+        if (forecasts is null) return;
+        Console.WriteLine(forecasts);
+        IEnumerable<object[]> res = [.. forecasts.Select(x => new object[] { x.Date, x.TemperatureC, x.TemperatureF, x.Summary ?? "None" })];
+        await JSModule.InvokeVoidAsync("copyButton", res);
     }
 }

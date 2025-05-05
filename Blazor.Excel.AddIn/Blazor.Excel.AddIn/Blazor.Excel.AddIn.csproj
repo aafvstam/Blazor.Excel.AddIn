@@ -12,9 +12,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Blazor.Excel.AddIn.Client\Blazor.Excel.AddIn.Client.csproj" />
 		
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.3" />
-		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.11.7" />
-		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.11.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.4" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.11.8" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.11.8" />
 	</ItemGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">

@@ -38,16 +38,16 @@ public partial class Home : ComponentBase
     }
 
     /// <summary>
-    /// Basic function to invoke inserting a paragraph
+    /// Basic function to invoke inserting 'Hello world!' text.
     /// </summary>
-    internal async Task InsertParagraph() =>
-        await JSModule.InvokeVoidAsync("insertParagraph");
+    private async Task HelloButton() =>
+        await JSModule.InvokeVoidAsync("helloButton");
 
 
     [JSInvokable]
     public static Task<string> SayHelloHome(string name)
     {
-        return Task.FromResult($"Hello Home, {name} from Home Page!");
+        return Task.FromResult($"Hello, {name} from Home Page!");
     }
 
     [JSInvokable]
