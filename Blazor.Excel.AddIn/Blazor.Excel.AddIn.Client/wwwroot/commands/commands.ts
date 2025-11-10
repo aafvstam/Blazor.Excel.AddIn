@@ -10,7 +10,7 @@ console.log("Loading command.js");
 
 // TODO: Make a generic function to load the taskpanes.
 // -----------------------------------------------------
-//async function startAction(event: Office.AddinCommands.Event) {
+//async function startAction(event: Office.AddinCommands.Event): Promise<void> {
 //  try {
 //    console.log("Running " + event.source.id);
 
@@ -19,7 +19,7 @@ console.log("Loading command.js");
 //        console.log("Navigating to Weather page via Blazor router");
 
 //        // First ensure DotNet is loaded
-//        const dotnetLoaded = await preloadDotNet();
+//        const dotnetLoaded: boolean = await preloadDotNet();
 
 //        if (dotnetLoaded) {
 //          // Use Blazor's NavigationManager to navigate programmatically
@@ -37,7 +37,7 @@ console.log("Loading command.js");
 //        console.log("Navigating to Counter page via Blazor router");
 
 //        // First ensure DotNet is loaded
-//        const dotnetLoadedForCounter = await preloadDotNet();
+//        const dotnetLoadedForCounter: boolean = await preloadDotNet();
 
 //        if (dotnetLoadedForCounter) {
 //          // Use Blazor's NavigationManager to navigate programmatically
@@ -55,7 +55,7 @@ console.log("Loading command.js");
 //        console.log("Navigating to Home page via Blazor router");
 
 //        // First ensure DotNet is loaded
-//        const dotnetLoadedForHome = await preloadDotNet();
+//        const dotnetLoadedForHome: boolean = await preloadDotNet();
 
 //        if (dotnetLoadedForHome) {
 //          // Use Blazor's NavigationManager to navigate programmatically
@@ -73,8 +73,9 @@ console.log("Loading command.js");
 //        console.log("Unknown command: " + event.source.id);
 //    }
 //  }
-//  catch (e: any) {
-//    console.error("Error in startAction: " + e.message);
+//  catch (error: unknown) {
+//    const errorMessage: string = error instanceof Error ? error.message : String(error);
+//    console.error("Error in startAction: " + errorMessage);
 //  }
 //  finally {
 //    event.completed();
@@ -84,9 +85,9 @@ console.log("Loading command.js");
 
 /**
  * Writes the text from the Home Blazor Page to the Worksheet when highlightSelectionHome runs.
- * @param event {Office.AddinCommands.Event}
+ * @param event - The Office add-in command event
  */
-async function highlightSelectionHome(event: Office.AddinCommands.Event) {
+async function highlightSelectionHome(event: Office.AddinCommands.Event): Promise<void> {
 
   // Implement your custom code here. The following code is a simple Excel example.  
   try {
@@ -98,13 +99,13 @@ async function highlightSelectionHome(event: Office.AddinCommands.Event) {
 
     // Used to verify the previous function call, if that fails, this will not run.
     // It will be skipped on error and jump into the catch block.
-    await Excel.run(async (context) => {
-      const range = context.workbook.getSelectedRange();
+    await Excel.run(async (context: Excel.RequestContext): Promise<void> => {
+      const range: Excel.Range = context.workbook.getSelectedRange();
       range.format.fill.color = "LightBlue";
       await context.sync();
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Note: In a production add-in, notify the user through your add-in's UI.
     console.error(error);
   }
@@ -118,9 +119,9 @@ async function highlightSelectionHome(event: Office.AddinCommands.Event) {
 
 /**
  * Writes the text from the Counter Blazor Page to the Worksheet when highlightSelectionCounter runs.
- * @param event {Office.AddinCommands.Event}
+ * @param event - The Office add-in command event
  */
-async function highlightSelectionCounter(event: Office.AddinCommands.Event) {
+async function highlightSelectionCounter(event: Office.AddinCommands.Event): Promise<void> {
 
   // Implement your custom code here. The following code is a simple Excel example.  
   try {
@@ -132,13 +133,13 @@ async function highlightSelectionCounter(event: Office.AddinCommands.Event) {
 
     // Used to verify the previous function call, if that fails, this will not run.
     // It will be skipped on error and jump into the catch block.
-    await Excel.run(async (context) => {
-      const range = context.workbook.getSelectedRange();
+    await Excel.run(async (context: Excel.RequestContext): Promise<void> => {
+      const range: Excel.Range = context.workbook.getSelectedRange();
       range.format.fill.color = "LightBlue";
       await context.sync();
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Note: In a production add-in, notify the user through your add-in's UI.
     console.error(error);
   }
@@ -152,17 +153,17 @@ async function highlightSelectionCounter(event: Office.AddinCommands.Event) {
 
 /**
  * Writes the event source id to the document when ExecuteFunction runs.
- * @param event {Office.AddinCommands.Event}
+ * @param event - The Office add-in command event
  */
-async function writeValue(event: Office.AddinCommands.Event) {
+async function writeValue(event: Office.AddinCommands.Event): Promise<void> {
 
   console.log("In writeValue");
 
   try {
-    let message = "ExecuteFunction works. Button ID=" + event.source.id;
+    const message: string = "ExecuteFunction works. Button ID=" + event.source.id;
 
-    await Excel.run(async (context) => {
-      const range = context.workbook.getSelectedRange();
+    await Excel.run(async (context: Excel.RequestContext): Promise<void> => {
+      const range: Excel.Range = context.workbook.getSelectedRange();
       range.values = [[message]];
       range.getEntireColumn().format.autofitColumns();
       await context.sync();
@@ -170,15 +171,18 @@ async function writeValue(event: Office.AddinCommands.Event) {
 
     console.log("writeValue Succeeded");
 
-  } catch (error: any) {
-    await Excel.run(async (context) => {
-      const range = context.workbook.getSelectedRange();
-      const cellRange = range.getCell(0, 0);
-      cellRange.values = [[error.message]];
+  } catch (error: unknown) {
+    const errorMessage: string = error instanceof Error ? error.message : String(error);
+
+    await Excel.run(async (context: Excel.RequestContext): Promise<void> => {
+      const range: Excel.Range = context.workbook.getSelectedRange();
+      const cellRange: Excel.Range = range.getCell(0, 0);
+      cellRange.values = [[errorMessage]];
       await context.sync();
     });
+
     console.log();
-    console.log("Error call : " + error.message);
+    console.log("Error call : " + errorMessage);
   }
   finally {
     console.log("Finish writeValue");
@@ -190,9 +194,9 @@ async function writeValue(event: Office.AddinCommands.Event) {
 
 /**
  * Calls the JSInvokable function CreateBubbles to create a bubble chart, after adding the data in the active worksheet.
- * @param event {Office.AddinCommands.Event}
+ * @param event - The Office add-in command event
  */
-async function createBubbles(event: Office.AddinCommands.Event) {
+async function createBubbles(event: Office.AddinCommands.Event): Promise<void> {
 
   console.log("Running createBubbles");
 
@@ -206,7 +210,7 @@ async function createBubbles(event: Office.AddinCommands.Event) {
 
     console.log("Finished createBubbles")
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Note: In a production add-in, notify the user through your add-in's UI.
     console.error(error);
   }
@@ -219,9 +223,9 @@ async function createBubbles(event: Office.AddinCommands.Event) {
 
 /**
  * Writes the text from the Home Blazor Page to the Excel Cell
- * @param {any} event
+ * @param event - The Office add-in command event
  */
-async function callBlazorOnHome(event: Office.AddinCommands.Event) {
+async function callBlazorOnHome(event: Office.AddinCommands.Event): Promise<void> {
   // Implement your custom code here. The following code is a simple Excel example.
   try {
     console.log("Running callBlazorOnHome");
@@ -229,7 +233,7 @@ async function callBlazorOnHome(event: Office.AddinCommands.Event) {
     console.log("Before callStaticLocalComponentMethodinit");
     await callStaticLocalComponentMethodinit("SayHelloHome");
     console.log("After callStaticLocalComponentMethodinit");
-  } catch (error) {
+  } catch (error: unknown) {
     // Note: In a production add-in, notify the user through your add-in's UI.
     console.error(error);
   } finally {
@@ -242,9 +246,9 @@ async function callBlazorOnHome(event: Office.AddinCommands.Event) {
 
 /**
  * Writes the text from the Counter Blazor Page to the Excel Cell
- * @param {any} event
+ * @param event - The Office add-in command event
  */
-async function callBlazorOnCounter(event: Office.AddinCommands.Event) {
+async function callBlazorOnCounter(event: Office.AddinCommands.Event): Promise<void> {
   // Implement your custom code here. The following code is a simple Excel example.
   try {
     console.log("Running callBlazorOnHome");
@@ -252,7 +256,7 @@ async function callBlazorOnCounter(event: Office.AddinCommands.Event) {
     console.log("Before callStaticLocalComponentMethodinit");
     await callStaticLocalComponentMethodinit("SayHelloCounter");
     console.log("After callStaticLocalComponentMethodinit");
-  } catch (error) {
+  } catch (error: unknown) {
     // Note: In a production add-in, notify the user through your add-in's UI.
     console.error(error);
   } finally {
@@ -268,21 +272,21 @@ async function callBlazorOnCounter(event: Office.AddinCommands.Event) {
  * Checks if the .NET runtime is loaded and invokes a .NET method to retrieve a string.
  * The string is then inserted into a Excel Cell.
  *
- * @param {string} methodname - The name of the .NET method to invoke.
+ * @param methodname - The name of the .NET method to invoke
  */
-async function callStaticLocalComponentMethodinit(methodname: string) {
+async function callStaticLocalComponentMethodinit(methodname: string): Promise<void> {
   console.log("In callStaticLocalComponentMethodinit");
 
   try {
-    let name = "Initializing";
+    let name: string = "Initializing";
 
     try {
-      var dotnetloaded = await preloadDotNet();
+      const dotnetloaded: boolean = await preloadDotNet();
 
       if (dotnetloaded === true) {
 
         // Call JSInvokable Function here ...
-        name = await DotNet.invokeMethodAsync(
+        name = await DotNet.invokeMethodAsync<string>(
           "Blazor.Excel.AddIn.Client",
           methodname,
           "Blazor Fan"
@@ -291,13 +295,14 @@ async function callStaticLocalComponentMethodinit(methodname: string) {
       } else {
         name = "Init DotNet Failed";
       }
-    } catch (error: any) {
-      name = error.message;
+    } catch (error: unknown) {
+      const errorMessage: string = error instanceof Error ? error.message : String(error);
+      name = errorMessage;
       console.error("Error during DotNet invocation: " + name);
     }
 
-    await Excel.run(async (context) => {
-      const range = context.workbook.getSelectedRange();
+    await Excel.run(async (context: Excel.RequestContext): Promise<void> => {
+      const range: Excel.Range = context.workbook.getSelectedRange();
       range.values = [[name]];
       range.getEntireColumn().format.autofitColumns();
       await context.sync();
@@ -305,28 +310,30 @@ async function callStaticLocalComponentMethodinit(methodname: string) {
 
     // Used to verify the previous function call, if that fails, this will not run.
     // It will be skipped on error and jump into the catch block.
-    await Excel.run(async (context) => {
-      const range = context.workbook.getSelectedRange();
+    await Excel.run(async (context: Excel.RequestContext): Promise<void> => {
+      const range: Excel.Range = context.workbook.getSelectedRange();
       range.format.fill.color = "yellow";
       await context.sync();
     });
   }
-  catch (error: any) {
-    await Excel.run(async (context) => {
-      const range = context.workbook.getSelectedRange();
-      const cellRange = range.getCell(0, 0);
-      cellRange.values = [[error.message]];
+  catch (error: unknown) {
+    const errorMessage: string = error instanceof Error ? error.message : String(error);
+
+    await Excel.run(async (context: Excel.RequestContext): Promise<void> => {
+      const range: Excel.Range = context.workbook.getSelectedRange();
+      const cellRange: Excel.Range = range.getCell(0, 0);
+      cellRange.values = [[errorMessage]];
       await context.sync();
     });
 
-    await Excel.run(async (context) => {
-      const range = context.workbook.getSelectedRange();
+    await Excel.run(async (context: Excel.RequestContext): Promise<void> => {
+      const range: Excel.Range = context.workbook.getSelectedRange();
       range.format.fill.color = "red";
       await context.sync();
     });
 
     console.log();
-    console.log("Error call : " + error.message);
+    console.log("Error call : " + errorMessage);
   }
   finally {
     console.log("Finish callStaticLocalComponentMethodinit");
@@ -342,35 +349,42 @@ async function callStaticLocalComponentMethodinit(methodname: string) {
  * This won't be necessary if the task pane is automatically opened when the add-in is loaded.
  * Also feel it should be possible to preload in the module.ts file for a guaranteed load.
  *
- * @returns result - Returns true if the .NET runtime is successfully loaded, otherwise false.
+ * @returns Returns true if the .NET runtime is successfully loaded, otherwise false
  */
-async function preloadDotNet() {
+async function preloadDotNet(): Promise<boolean> {
   console.log("In preloadDotNet");
   try {
     console.log("Before DotNet.invokeMethodAsync");
-    var result = "";
+    let result: string = "";
 
-    let attempts = 0;
-    while (result === "" && attempts < 5) {
+    let attempts: number = 0;
+    const maxAttempts: number = 5;
+    const retryDelayMs: number = 1000;
+
+    while (result === "" && attempts < maxAttempts) {
       try {
         if (attempts > 0) {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise<void>((resolve: () => void): void => {
+            setTimeout(resolve, retryDelayMs);
+          });
         }
-        result = await DotNet.invokeMethodAsync(
+        result = await DotNet.invokeMethodAsync<string>(
           "Blazor.Excel.AddIn.Client",
           "PreloaderDummy"
         );
-      } catch (error: any) {
-        console.error("Error during DotNet invocation: " + error.message);
+      } catch (error: unknown) {
+        const errorMessage: string = error instanceof Error ? error.message : String(error);
+        console.error("Error during DotNet invocation: " + errorMessage);
       }
       attempts++;
     }
 
-    return result === "Loaded" ? true : false;
-
     console.log("After DotNet.invokeMethodAsync");
-  } catch (error: any) {
-    console.log("Error call : " + error.message);
+    return result === "Loaded";
+
+  } catch (error: unknown) {
+    const errorMessage: string = error instanceof Error ? error.message : String(error);
+    console.log("Error call : " + errorMessage);
   } finally {
     console.log("Finish preloadDotNet");
   }
