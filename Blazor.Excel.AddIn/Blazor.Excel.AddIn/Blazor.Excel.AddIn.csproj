@@ -3,26 +3,44 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<TargetOfficeVersion>15.0</TargetOfficeVersion>
+		<TargetOfficeVersion>16.0</TargetOfficeVersion>
+
+    <!-- Build quality and determinism -->
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <Deterministic>true</Deterministic>
+    <IsPackable>false</IsPackable>
+    <!-- Optional: treat warnings as errors in Release -->
 	</PropertyGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Blazor.Excel.AddIn.Client\Blazor.Excel.AddIn.Client.csproj" />
 		
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.4" />
-		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.11.8" />
-		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.11.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.0-rc.2.25502.107" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.1" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.13.1" />
 	</ItemGroup>
 
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="npm install" />
-	</Target>
-	
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="npm run start-local" />
-	</Target>
+  <!-- Incremental, reproducible npm restore -->
+  <Target Name="NpmRestore"
+          BeforeTargets="Build"
+          Inputs="package-lock.json"
+          Outputs="node_modules/.package-lock.stamp">
+    <Message Importance="high" Text="Running npm ci (only when package-lock.json changes)..." />
+    <Exec Command="npm ci"
+          Condition="Exists('package.json') and Exists('package-lock.json')" />
+    <Touch Files="node_modules/.package-lock.stamp" AlwaysCreate="true" />
+  </Target>
 
+
+  <!-- Only start local dev process when running (F5), controlled by RunStartLocalDev property -->
+  <Target Name="StartLocalDev"
+          AfterTargets="Build"
+          Condition="'$(Configuration)'=='Debug' and '$(BuildingInsideVisualStudio)'=='true' and '$(CI)'!='true'">
+    <Message Importance="high" Text="Starting local dev environment..." />
+    <Exec Command="npm run start-local" WorkingDirectory="..\Blazor.Excel.AddIn\" />
+  </Target>
 </Project>
